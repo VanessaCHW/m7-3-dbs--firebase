@@ -1,16 +1,27 @@
-import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import Avatar from './Avatar';
+import React, { useContext, useEffect } from "react";
+import styled from "styled-components";
+import Avatar from "./Avatar";
 
-import { AppContext } from './AppContext';
+import { AppContext } from "./AppContext";
 
 const App = () => {
-  const {} = useContext(AppContext);
+  const { appUser, signInWithGoogle, handleSignOut, message } = useContext(
+    AppContext
+  );
 
   return (
     <StyledPageWrapper>
       <StyledHeader>
-        <button>Sign In</button>
+        {appUser && appUser.email ? (
+          <StyledContainer>
+            <Avatar src={appUser.photoURL} />
+            <p>
+              {appUser.displayName} ({appUser.email})
+            </p>
+          </StyledContainer>
+        ) : (
+          <button onClick={signInWithGoogle}>Sign In</button>
+        )}
       </StyledHeader>
       <StyledContainer>{message}</StyledContainer>
     </StyledPageWrapper>
